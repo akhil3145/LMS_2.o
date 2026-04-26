@@ -1,0 +1,170 @@
+# 🎓 LearnFlow — YouTube-Powered LMS
+
+<div align="center">
+
+![LearnFlow Banner](https://capsule-render.vercel.app/api?type=waving&color=4f7cff&height=200&section=header&text=LearnFlow&fontSize=80&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Turn%20YouTube%20into%20a%20Bootcamp&descAlignY=55&descAlign=50)
+
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.0.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+
+**Transform any YouTube playlist or video into a structured bootcamp course — instantly.**
+
+[View Demo](#) · [Report Bug](https://github.com/akhil3145/LMS_2.o/issues) · [Request Feature](https://github.com/akhil3145/LMS_2.o/issues)
+
+</div>
+
+---
+
+## ✨ What is LearnFlow?
+
+LearnFlow is a **YouTube-powered Learning Management System** that lets anyone turn a YouTube playlist or video into a fully structured bootcamp course — complete with modules, lessons, progress tracking, and a clean video player.
+
+No more jumping between browser tabs. Just paste a link and start learning.
+
+---
+
+## 🚀 Features
+
+| Feature | Status |
+|---|---|
+| 🔐 Login screen with username | ✅ Done |
+| 🏠 Dashboard with bootcamp cards | ✅ Done |
+| 📚 Course page with sidebar + video player | ✅ Done |
+| 🎯 Lesson selection with active highlighting | ✅ Done |
+| ✅ Mark lesson complete + progress bar | ✅ Done |
+| 🔄 State-based navigation (no router) | ✅ Done |
+| 🔗 YouTube playlist → structured course | 🔜 Coming |
+| 🎬 Single video → timed sections bootcamp | 🔜 Coming |
+| 💾 Data persistence | 🔜 Coming |
+
+---
+
+## 🖼️ App Flow
+
+```
+ Login Screen
+      │
+      ▼
+ Dashboard
+  ├── Paste YouTube URL
+  ├── Click "Create Bootcamp"
+  └── See Bootcamp Cards
+      │
+      ▼
+ Course Page
+  ├── Sidebar (Modules + Lessons)
+  ├── YouTube Video Player
+  ├── Progress Bar
+  └── Mark Complete Button
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- ⚛️ **React 18** — UI library
+- ⚡ **Vite** — build tool and dev server
+- 🎨 **Inline styles + CSS variables** — no UI libraries
+- 🧭 **useState navigation** — no React Router
+
+### Backend *(in progress)*
+- 🟢 **Node.js + Express** — REST API
+- 📺 **YouTube Data API v3** — playlist and video data
+- 🔐 **dotenv** — environment variables
+- 🌐 **CORS** — cross-origin support
+
+---
+
+## 📁 Project Structure
+
+```
+LMS_2.o/
+├── src/
+│   ├── components/
+│   │   ├── Login.jsx          # Login screen
+│   │   ├── Dashboard.jsx      # Dashboard + bootcamp cards
+│   │   ├── Sidebar.jsx        # Course sidebar with modules
+│   │   └── VideoPlayer.jsx    # YouTube embed + progress
+│   ├── App.jsx                # Main app + navigation state
+│   ├── main.jsx               # React entry point
+│   └── index.css              # Global styles + CSS variables
+├── index.html
+├── vite.config.js
+└── package.json
+```
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+- Node.js v18+
+- npm v9+
+
+### Installation
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/akhil3145/LMS_2.o.git
+
+# 2. Go into the project folder
+cd LMS_2.o
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the dev server
+npm run dev
+
+# On Windows PowerShell if blocked:
+npm.cmd run dev
+```
+
+Open **http://localhost:5173** in your browser.
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Login page
+- [x] Dashboard with dummy bootcamps
+- [x] Course page with video player
+- [x] Lesson completion + progress tracking
+- [ ] Backend — YouTube playlist → course
+- [ ] Backend — Single video → timed sections
+- [ ] Real bootcamp generation from URL input
+- [ ] Data persistence with localStorage
+- [ ] User progress saved across sessions
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+1. Fork the repo
+2. Create your branch (`git checkout -b feature/cool-feature`)
+3. Commit your changes (`git commit -m 'add cool feature'`)
+4. Push to the branch (`git push origin feature/cool-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+
+Built with ❤️ by [akhil3145](https://github.com/akhil3145)
+
+⭐ Star this repo if you find it useful!
+
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=4f7cff&height=100&section=footer)
+
+</div>
