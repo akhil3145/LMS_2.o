@@ -6,16 +6,17 @@ const styles = {
     display: "grid",
     placeItems: "center",
     padding: "24px",
-    background: "radial-gradient(circle at top, rgba(79, 124, 255, 0.18), transparent 34%), var(--bg)",
+    background:
+      "radial-gradient(circle at 50% 0%, rgba(79, 124, 255, 0.2), transparent 32%), radial-gradient(circle at 80% 80%, rgba(45, 212, 125, 0.09), transparent 24%), var(--bg)",
   },
   card: {
     width: "100%",
-    maxWidth: "420px",
-    padding: "34px",
+    maxWidth: "430px",
+    padding: "36px",
     borderRadius: "24px",
     background: "rgba(18, 20, 26, 0.94)",
     border: "1px solid var(--border)",
-    boxShadow: "0 28px 90px rgba(0, 0, 0, 0.42)",
+    boxShadow: "var(--shadow)",
     animation: "fadeUp 420ms ease both",
   },
   logoWrap: {
@@ -31,9 +32,10 @@ const styles = {
     letterSpacing: "0.2px",
   },
   title: {
-    fontSize: "30px",
+    fontSize: "32px",
     lineHeight: 1.15,
     marginBottom: "10px",
+    letterSpacing: "-0.02em",
   },
   subtext: {
     color: "var(--muted)",
@@ -58,6 +60,7 @@ const styles = {
     padding: "0 14px",
     fontSize: "15px",
     outline: "none",
+    transition: "border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease",
   },
   error: {
     color: "#ff6b7a",
@@ -76,6 +79,8 @@ const styles = {
     cursor: "pointer",
     marginTop: "18px",
     boxShadow: "0 16px 34px rgba(79, 124, 255, 0.26)",
+    display: "grid",
+    placeItems: "center",
   },
   spinner: {
     display: "inline-block",
@@ -84,6 +89,7 @@ const styles = {
     border: "2px solid rgba(255, 255, 255, 0.35)",
     borderTopColor: "#ffffff",
     borderRadius: "50%",
+    animation: "spin 700ms linear infinite",
   },
 };
 
@@ -91,6 +97,7 @@ function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const isDisabled = !username.trim() || isLoading;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -135,11 +142,38 @@ function Login({ onLogin }) {
           id="username"
           style={styles.input}
           value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          onChange={(event) => {
+            setUsername(event.target.value);
+            if (error) {
+              setError("");
+            }
+          }}
+          onFocus={(event) => {
+            event.currentTarget.style.borderColor = "var(--accent)";
+            event.currentTarget.style.boxShadow = "0 0 0 4px rgba(79, 124, 255, 0.14)";
+          }}
+          onBlur={(event) => {
+            event.currentTarget.style.borderColor = "var(--border)";
+            event.currentTarget.style.boxShadow = "none";
+          }}
           placeholder="Enter your name"
         />
         {error ? <p style={styles.error}>{error}</p> : null}
-        <button style={styles.button} type="submit" disabled={isLoading}>
+        <button
+          style={styles.button}
+          type="submit"
+          disabled={isDisabled}
+          onMouseEnter={(event) => {
+            if (!isDisabled) {
+              event.currentTarget.style.transform = "translateY(-1px)";
+              event.currentTarget.style.boxShadow = "0 20px 42px rgba(79, 124, 255, 0.32)";
+            }
+          }}
+          onMouseLeave={(event) => {
+            event.currentTarget.style.transform = "translateY(0)";
+            event.currentTarget.style.boxShadow = "0 16px 34px rgba(79, 124, 255, 0.26)";
+          }}
+        >
           {isLoading ? <span style={styles.spinner} /> : "Continue"}
         </button>
       </form>

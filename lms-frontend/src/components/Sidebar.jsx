@@ -1,10 +1,10 @@
 const styles = {
   sidebar: {
-    width: "260px",
-    minWidth: "260px",
+    width: "280px",
+    minWidth: "280px",
     height: "100vh",
     overflowY: "auto",
-    background: "var(--surface)",
+    background: "rgba(17, 20, 28, 0.98)",
     borderRight: "1px solid var(--border)",
   },
   header: {
@@ -13,18 +13,27 @@ const styles = {
   },
   back: {
     width: "100%",
-    height: "40px",
-    border: "1px solid var(--border)",
-    borderRadius: "12px",
-    background: "var(--surface2)",
-    color: "var(--text)",
+    minHeight: "42px",
+    border: "1px solid rgba(79, 124, 255, 0.36)",
+    borderRadius: "13px",
+    background: "rgba(79, 124, 255, 0.12)",
+    color: "#dce5ff",
     cursor: "pointer",
-    fontWeight: 800,
-    marginBottom: "16px",
+    fontWeight: 850,
+    marginBottom: "18px",
+  },
+  label: {
+    color: "var(--muted2)",
+    fontSize: "11px",
+    textTransform: "uppercase",
+    letterSpacing: "0.08em",
+    fontWeight: 850,
+    marginBottom: "8px",
   },
   title: {
-    fontSize: "15px",
+    fontSize: "16px",
     lineHeight: 1.4,
+    letterSpacing: "-0.01em",
   },
   progress: {
     padding: "18px",
@@ -35,11 +44,11 @@ const styles = {
     justifyContent: "space-between",
     color: "#cbd2e8",
     fontSize: "13px",
-    fontWeight: 800,
+    fontWeight: 850,
     marginBottom: "10px",
   },
   progressTrack: {
-    height: "8px",
+    height: "10px",
     borderRadius: "999px",
     background: "#0d1017",
     overflow: "hidden",
@@ -48,13 +57,14 @@ const styles = {
   progressFill: {
     height: "100%",
     background: "linear-gradient(135deg, var(--accent), var(--accent2))",
+    transition: "width 180ms ease",
   },
   nav: {
     padding: "10px 0 18px",
   },
   moduleTitle: {
-    padding: "14px 18px 8px",
-    color: "var(--muted)",
+    padding: "16px 18px 8px",
+    color: "var(--muted2)",
     fontSize: "11px",
     textTransform: "uppercase",
     letterSpacing: "0.08em",
@@ -64,23 +74,26 @@ const styles = {
     display: "flex",
     alignItems: "center",
     gap: "10px",
-    margin: "2px 10px",
-    padding: "10px",
-    borderRadius: "12px",
+    margin: "3px 10px",
+    padding: "11px 10px",
+    borderRadius: "13px",
+    border: "1px solid transparent",
     borderLeft: "3px solid transparent",
     color: "#cbd2e8",
     cursor: "pointer",
     fontSize: "13px",
     lineHeight: 1.35,
+    transition: "background-color 160ms ease, border-color 160ms ease, color 160ms ease",
   },
   lessonActive: {
-    background: "rgba(79, 124, 255, 0.14)",
+    background: "rgba(79, 124, 255, 0.16)",
+    border: "1px solid rgba(79, 124, 255, 0.34)",
     borderLeft: "3px solid var(--accent)",
     color: "#f4f7ff",
   },
   dot: {
-    width: "18px",
-    height: "18px",
+    width: "20px",
+    height: "20px",
     borderRadius: "50%",
     display: "grid",
     placeItems: "center",
@@ -96,8 +109,8 @@ const styles = {
     borderColor: "var(--accent)",
   },
   dotDone: {
-    background: "#21c55d",
-    borderColor: "#21c55d",
+    background: "var(--success)",
+    borderColor: "var(--success)",
   },
 };
 
@@ -108,9 +121,21 @@ function Sidebar({ bootcamp, selectedLesson, onLessonSelect, onBack, completedLe
   return (
     <aside style={styles.sidebar}>
       <div style={styles.header}>
-        <button style={styles.back} onClick={onBack}>
+        <button
+          style={styles.back}
+          onClick={onBack}
+          onMouseEnter={(event) => {
+            event.currentTarget.style.transform = "translateY(-1px)";
+            event.currentTarget.style.background = "rgba(79, 124, 255, 0.18)";
+          }}
+          onMouseLeave={(event) => {
+            event.currentTarget.style.transform = "translateY(0)";
+            event.currentTarget.style.background = "rgba(79, 124, 255, 0.12)";
+          }}
+        >
           Back to Dashboard
         </button>
+        <div style={styles.label}>Current course</div>
         <h2 style={styles.title}>{bootcamp.title}</h2>
       </div>
 
@@ -140,11 +165,13 @@ function Sidebar({ bootcamp, selectedLesson, onLessonSelect, onBack, completedLe
                   onMouseEnter={(event) => {
                     if (!isActive) {
                       event.currentTarget.style.background = "var(--surface2)";
+                      event.currentTarget.style.borderColor = "var(--border)";
                     }
                   }}
                   onMouseLeave={(event) => {
                     if (!isActive) {
                       event.currentTarget.style.background = "transparent";
+                      event.currentTarget.style.borderColor = "transparent";
                     }
                   }}
                 >
@@ -155,7 +182,7 @@ function Sidebar({ bootcamp, selectedLesson, onLessonSelect, onBack, completedLe
                       ...(isComplete ? styles.dotDone : {}),
                     }}
                   >
-                    {isComplete ? "✓" : ""}
+                    {isComplete ? "\u2713" : ""}
                   </span>
                   <span>{lesson.title}</span>
                 </div>

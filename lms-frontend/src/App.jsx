@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "./components/Dashboard.jsx";
 import Login from "./components/Login.jsx";
 import Sidebar from "./components/Sidebar.jsx";
@@ -11,7 +11,7 @@ const dummyBootcamps = [
     url: "",
     totalLessons: 6,
     color: "#4f7cff",
-    icon: "⚛️",
+    icon: "JS",
     modules: [
       {
         title: "Module 1 Foundations",
@@ -37,7 +37,7 @@ const dummyBootcamps = [
     url: "",
     totalLessons: 6,
     color: "#21c55d",
-    icon: "🐍",
+    icon: "PY",
     modules: [
       {
         title: "Module 1 Python Foundations",
@@ -65,11 +65,14 @@ const styles = {
     height: "100vh",
     overflow: "hidden",
     background: "var(--bg)",
+    animation: "fadeUp 220ms ease both",
   },
   main: {
     flex: 1,
     overflowY: "auto",
-    padding: "34px",
+    padding: "40px",
+    background:
+      "radial-gradient(circle at top right, rgba(79, 124, 255, 0.12), transparent 34%), var(--bg)",
   },
 };
 
@@ -80,6 +83,65 @@ function App() {
   const [activeBootcamp, setActiveBootcamp] = useState(null);
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [completedLessons, setCompletedLessons] = useState(new Set());
+  const [hasLoadedStorage, setHasLoadedStorage] = useState(false);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("lf_user");
+    const savedBootcamps = localStorage.getItem("lf_bootcamps");
+    const savedCompleted = localStorage.getItem("lf_completed");
+
+    if (savedUser) {
+      setUser(savedUser);
+      setPage("dashboard");
+    } else {
+      setUser(null);
+      setPage("login");
+    }
+
+    if (savedBootcamps) {
+      try {
+        const parsedBootcamps = JSON.parse(savedBootcamps);
+        setBootcamps(Array.isArray(parsedBootcamps) ? parsedBootcamps : dummyBootcamps);
+      } catch {
+        setBootcamps(dummyBootcamps);
+      }
+    }
+
+    if (savedCompleted) {
+      try {
+        const parsedCompleted = JSON.parse(savedCompleted);
+        setCompletedLessons(new Set(Array.isArray(parsedCompleted) ? parsedCompleted : []));
+      } catch {
+        setCompletedLessons(new Set());
+      }
+    }
+
+    setHasLoadedStorage(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasLoadedStorage || user === null) {
+      return;
+    }
+
+    localStorage.setItem("lf_user", user);
+  }, [hasLoadedStorage, user]);
+
+  useEffect(() => {
+    if (!hasLoadedStorage) {
+      return;
+    }
+
+    localStorage.setItem("lf_bootcamps", JSON.stringify(bootcamps));
+  }, [bootcamps, hasLoadedStorage]);
+
+  useEffect(() => {
+    if (!hasLoadedStorage) {
+      return;
+    }
+
+    localStorage.setItem("lf_completed", JSON.stringify(Array.from(completedLessons)));
+  }, [completedLessons, hasLoadedStorage]);
 
   function handleLogin(username) {
     setUser(username);
@@ -87,9 +149,12 @@ function App() {
   }
 
   function handleOpenCourse(bootcamp) {
+    if (!bootcamp.modules?.[0]?.lessons?.[0]) {
+      return;
+    }
+
     setActiveBootcamp(bootcamp);
     setSelectedLesson(bootcamp.modules[0].lessons[0]);
-    setCompletedLessons(new Set());
     setPage("course");
   }
 
@@ -100,6 +165,7 @@ function App() {
   }
 
   function handleLogout() {
+    localStorage.removeItem("lf_user");
     setUser(null);
     setPage("login");
   }
@@ -109,6 +175,10 @@ function App() {
   }
 
   function handleMarkComplete() {
+    if (!activeBootcamp || !selectedLesson) {
+      return;
+    }
+
     const lessons = activeBootcamp.modules.flatMap((module) => module.lessons);
     const currentIndex = lessons.findIndex((lesson) => lesson === selectedLesson);
 
