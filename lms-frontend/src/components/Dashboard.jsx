@@ -228,7 +228,8 @@ function Dashboard({ user, bootcamps, setBootcamps, onOpenCourse, onLogout }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/generate-course", {
+      const response = await // ✅ new
+fetch("https://lms-2-o.onrender.com/api/generate-course", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

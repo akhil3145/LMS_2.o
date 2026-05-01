@@ -11,7 +11,7 @@ const apiKey = process.env.YOUTUBE_API_KEY;
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: ["http://localhost:5173", "https://lms-2-o.vercel.app"],
   }),
 );
 app.use(express.json());
