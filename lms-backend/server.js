@@ -5,16 +5,19 @@ import express from "express";
 
 dotenv.config();
 
-const app = express();
-const port = process.env.PORT || 5000;
-const apiKey = process.env.YOUTUBE_API_KEY;
+const cors = require("cors");
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://lms-2-o.vercel.app"],
-  }),
-);
-app.use(express.json());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://lms-2-o.vercel.app"
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"]
+}));
+
+// VERY IMPORTANT (handles preflight requests)
+app.options("*", cors());
 
 function extractPlaylistId(url) {
   return new URL(url).searchParams.get("list");
